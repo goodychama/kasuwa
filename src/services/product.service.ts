@@ -37,8 +37,6 @@ export class ProductService extends BaseService implements IBaseService<IProduct
     });
   }
 
-
-
   updateProduct = async (id: string, data: Partial<IProduct>) => {
     return this.prisma.product.update({ where: { id }, data });
   }
