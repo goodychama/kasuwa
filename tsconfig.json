@@ -6,9 +6,15 @@
     "target": "ESNext",
     "outDir": "./build",
     "rootDir": "./src",
+    "typeRoots": [
+      "@types/express",
+      "./node_modules/@types",
+    ]
   },
   "include": [
-    "src/**/*.ts"
+    "src/**/*.ts",
+    "@types",
+    "@types/express"
   ],
   "exclude": [
     "node_modules",

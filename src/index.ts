@@ -2,14 +2,9 @@ import cookieParser from 'cookie-parser';
 import express, { Express } from "express";
 import session from "express-session";
 import { APP_SECRET, PORT } from "./secrets";
-import { PrismaClient } from "@prisma/client";
 import cors from 'cors';
 
-export const prismaClient: PrismaClient = new PrismaClient(
-  {
-    log: ['query']
-  }
-);
+
 
 class Server {
   public app: Express;
@@ -27,7 +22,6 @@ class Server {
   }
 
   private initializeMiddlewares() {
-    // initialize any middleware
     // Allow CORS for all origins
     this.app.use(cors());
     this.app.use(express.json());
