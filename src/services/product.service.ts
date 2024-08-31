@@ -1,7 +1,7 @@
 import { IProduct } from '../interfaces/product.interface';
 import { BaseService } from './base.service';
-
-export class ProductService extends BaseService {
+import { IBaseService } from '../interfaces/base.interface';
+export class ProductService extends BaseService implements IBaseService<IProduct> {
   protected inclusion;
   constructor() {
     super()
@@ -10,6 +10,15 @@ export class ProductService extends BaseService {
       category: true,
       brand: true,
     }
+  }
+  getById = (id: string): Promise<IProduct> => {
+    return this.prisma.product.findUnique({ where: { id } });
+  }
+  get(): Promise<IProduct[]> {
+    return this.prisma.product.findMany({ where: { isDeleted: false }, include: this.inclusion });
+  }
+  delete(id: string): Promise<IProduct> {
+    return this.prisma.product.update({ where: { id }, data: { isDeleted: true } });
   }
 
   createProduct = async (data: IProduct) => {
@@ -28,21 +37,12 @@ export class ProductService extends BaseService {
     });
   }
 
-  getProducts = async (id: string) => {
-    return this.prisma.product.findMany({ where: { isDeleted: false }, include:this.inclusion });
-  }
-  getProductById = async (id: string) => {
-    return this.prisma.product.findUnique({ where: { id } });
-  }
+
 
   updateProduct = async (id: string, data: Partial<IProduct>) => {
     return this.prisma.product.update({ where: { id }, data });
   }
 
-  deleteProduct = async (id: string) => {
-    // return this.prisma.product.delete({ where: { id } });
-    return this.prisma.product.update({ where: { id }, data: { isDeleted: true } });
-  }
 }
 
 

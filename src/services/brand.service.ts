@@ -1,29 +1,25 @@
 import { IBrand } from '../interfaces/category.interface';
 import { BaseService } from './base.service';
-
-export class BrandService extends BaseService {
+import { IBaseService } from '../interfaces/base.interface';
+export class BrandService extends BaseService implements IBaseService<IBrand> {
     constructor() {
         super()
     }
-
+    getById = (id: string): Promise<IBrand> => {
+        return this.prisma.brand.findUnique({ where: { id } });
+    }
+    get = (): Promise<IBrand[]> => {
+        return this.prisma.brand.findMany();
+    }
+    delete = (id: string): Promise<IBrand> => {
+        return this.prisma.brand.update({ where: { id }, data: { isDeleted: true } });
+    }
     createBrand = async (data: IBrand) => {
         const { id, ...rest } = data;
         return this.prisma.brand.create({ data: rest });
     }
-    brands = async () => {
-        return this.prisma.brand.findMany();
-    }
-
-    getBrandById = async (id: string) => {
-        return this.prisma.brand.findUnique({ where: { id } });
-    }
-
     updateBrand = async (id: string, data: Partial<IBrand>) => {
         const { id: _, ...rest } = data;
         return this.prisma.brand.update({ where: { id }, data: rest });
-      }
-    
-    deleteBrand = async (id: string) => {
-        return this.prisma.brand.update({ where: { id }, data: { isDeleted: true } });
     }
 }
