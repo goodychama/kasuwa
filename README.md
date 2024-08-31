@@ -19,7 +19,7 @@ The Agro Commerce Merchant-to-Customer Interface App is designed to connect cust
 - **Customer Interface**:
   - Browse products by category, location, and merchant.
   - Filter products by cluster of produce.
-  - Integrated payment gateway (PaystackStripe) for secure transactions.
+  - Integrated payment gateway (Paystack) for secure transactions.
   - User account management for customers.
 
 - **Merchant Interface**:
